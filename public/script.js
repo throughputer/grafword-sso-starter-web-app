@@ -27,8 +27,6 @@ var hash = window.location.hash.slice(1);
 var params = new URLSearchParams(hash);
 var id_token = params.get('id_token');
 
-console.log('id_token', id_token)
-
 if (id_token) {
     try {
         var payload = id_token.split('.')[1]; // Get the Payload part
