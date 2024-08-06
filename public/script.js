@@ -2,7 +2,7 @@ const clientId = 'CLIENT_ID';
 const grafwordDomain = 'GRAFWORD_DOMAIN';
 
 var currentHost = window.location.protocol + '//' + window.location.host;
-var redirectUri = encodeURIComponent(currentHost + '/profile.html');
+var redirectUri = encodeURIComponent(currentHost + '/profile');
 
 // Function to construct the authorization URL
 function getAuthUrl() {
