@@ -2,7 +2,7 @@
 
 ##  What is Grafword?
 
-Grafword is an advanced Single Sign-On (SSO) solution that utilizes AI-powered, graphics-based strong authentication. It ensures the use of 128-character cryptic passwords, providing superior protection against brute-force attacks. Grafword replaces traditional password fields with graphical authentication, offering both security and convenience for users and app operators. The system continuously monitors login sessions to adapt authentication challenges, maintaining robust security without compromising user experience.
+[Grafword](https://login.grafword.com) is an advanced Single Sign-On (SSO) solution that utilizes AI-powered, graphics-based strong authentication. It ensures the use of 128-character cryptic passwords, providing superior protection against brute-force attacks. Grafword replaces traditional password fields with graphical authentication, offering both security and convenience for users and app operators. The system continuously monitors login sessions to adapt authentication challenges, maintaining robust security without compromising user experience.
 
 To learn more, visit [Grafword](https://grafword.com).
 
