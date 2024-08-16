@@ -130,7 +130,7 @@ Redirect URI is the uri the user will be redirected to after successfully loggin
     ```
 
 4. **In your local web browser, verify Nginx is running:**
-   - Navigate to `http://Public_IPv4_DNS`. You should see the "Welcome to Nginx!" page.
+   - Navigate to `http://Public_IPv4_DNS`. *It may take several seconds.* But you should see the "Welcome to Nginx!" page. 
 
 ## Step 5: Clone the Repository
 
@@ -138,7 +138,7 @@ Redirect URI is the uri the user will be redirected to after successfully loggin
  
     ```bash
     git clone https://github.com/throughputer/grafword-starter-spa-aws.git
-    cd grafword-starter-spa
+    cd grafword-starter-spa-aws
     ```
 
 2. **Create a `.env` file:**  
@@ -155,12 +155,13 @@ Redirect URI is the uri the user will be redirected to after successfully loggin
 
 ## Step 6: Configure and Run your Application on your AWS Instance
 
-**While still in your root directory `grafword-starter-spa`**
+**While still in your root directory `grafword-starter-spa-aws`**
 
 1. **Install Node.js and Forever:**
 
     ```bash
     sudo apt install nodejs npm -y
+    sudo npm install forever -g
     npm install
     ```
 2. **Start your Node.js application using Forever:**
@@ -169,7 +170,7 @@ Redirect URI is the uri the user will be redirected to after successfully loggin
     npm start
     ```
 
-    - You can also use `npm run stop` to stop the process. Or `npm run restart` to restart.
+    - You can also use `forever list` to view your running process. `npm run stop` to stop the process.`npm run restart` to restart.
 
 ## Step 7: Configure Nginx as a Reverse Proxy
 
@@ -179,11 +180,13 @@ Redirect URI is the uri the user will be redirected to after successfully loggin
 - Replace the `{{server_name}}` placeholder in the template with your actual EC2 public DNS, and then write the updated configuration to the appropriate Nginx configuration file with the following command:
 
     ```bash
-    sed 's/{{server_name}}/Public_IPv4_DNS/g' nginx.conf.template > /etc/nginx/sites-available/default
+    sed 's/{{server_name}}/Public_IPv4_DNS/g' nginx.conf.template | sudo tee /etc/nginx/sites-available/default > /dev/null
     ```
+
+
     For example, if your EC2 public DNS is e`c2-01-23-456-789.compute-1.amazonaws.com`, you would use the following command:
     ```bash
-    sed 's/{{server_name}}/ec2-01-23-456-789.compute-1.amazonaws.com/g' nginx.conf.template > /etc/nginx/sites-available/default
+    sed 's/{{server_name}}/ec2-01-23-456-789.compute-1.amazonaws.com/g' nginx.conf.template | sudo tee /etc/nginx/sites-available/default > /dev/null
     ```
 
 2. **Test the Nginx configuration:**
@@ -191,17 +194,21 @@ Redirect URI is the uri the user will be redirected to after successfully loggin
     ```bash
     sudo nginx -t
     ```
+    You should see `nginx: configuration file /etc/nginx/nginx.conf test is successful`
 
 3. **Restart Nginx to apply the changes:**
 
     ```bash
     sudo systemctl restart nginx
     ```
+    Give it a minute or two to load.
 
 ## Step 9: Access Your Application
 
 1. **Open your local web browser and navigate to:**  
-   `http://Public_IPv4_DNS` to access your Grafword Starter SPA 
+   `http://Public_IPv4_DNS` to access your Grafword Starter SPA.
+
+   Example: `http://http://ec2-01-23-456-789.compute-1.amazonaws.com`
 
 ## Conclusion
 
