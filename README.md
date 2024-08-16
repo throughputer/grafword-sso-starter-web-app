@@ -141,8 +141,8 @@ Redirect URI is the uri the user will be redirected to after successfully loggin
     cd grafword-starter-spa-aws
     ```
 
-2. **Create a `.env` file:**  
-    In the root of your cloned project directory on your AWS instance. If not already in, cd into it with `cd grafword-starter-spa` Then create a .env file and add the required content in a single step using the following command:
+2. **Create a `.env` file:**
+    `cd grafword-starter-spa`, then modify and execute the following:
 
     ```bash
     echo -e "CLIENT_ID=client_id_here\nGRAFWORD_DOMAIN=grafword_domain_here" > .env
@@ -212,4 +212,5 @@ Redirect URI is the uri the user will be redirected to after successfully loggin
 
 ## Conclusion
 
-The benefits of Grafword SSO include the unique combination of security without inconveniencing the users, and while providing high app developer productivity, by providing out-of-the-box secure, password-less user account management system and a starter online app, such that the Grafword SSO based new web app developer needs to only add the user-space functionality for their next 'killer' app.
+Grafword SSO provides an out-of-the-box secure, password-less user account management system. This starter app, gets you off and running
+with your next "killer app" with a Grafword-based secure login solution already in place.
