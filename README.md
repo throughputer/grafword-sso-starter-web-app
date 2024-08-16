@@ -28,11 +28,12 @@ You can learn more about SPAs from this [Wikipedia article](https://en.wikipedia
      - **Follow these steps to configure and launch your EC2 instance:**
 
        a. **Configure your instance:**
+          - Name your instance
           - Choose an AMI: Select a machine with a Ubuntu OS, such as Ubuntu Server 20.04 LTS.
           - Select an Instance Type: Choose `t2.micro` (eligible for the AWS Free Tier).
          
           - **Add/Create a Key Pair:**
-            - Create a new key pair. You can name it `grafword_spa.pem` [How to create a key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html#having-ec2-create-your-key-pair).
+            - Create a new key pair. You can name it `grafword_spa` [How to create a key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html#having-ec2-create-your-key-pair).
             - Download the `.pem` file. After clicking `Create Key Pair`," the `.pem` file will be automatically downloaded to your default download folder. You can move it to your .ssh folder:
 
               ```bash
@@ -45,10 +46,11 @@ You can learn more about SPAs from this [Wikipedia article](https://en.wikipedia
 
        b. **Launch the Instance:**
           - Click on `Launch instance`.
+          - If you see `Success`, that means you successfully greated an instance!
 
        c. **View Instance Details:**
-          - Click `View all instances`.
-          - Wait until the **Instance State** shows `running` and the **Status Checks** indicate `2/2 checks passed`.
+          - Scroll down and click `View all instances`. Refresh the page if you don't see your new instance.
+          - Wait until the **Instance State** shows `running` and the **Status Checks** indicate `2/2 checks passed`. Refresh page as needed.
           - Select the instance to view your `Public_IPv4_DNS`. Which will be used to connect to your ec2. 
           - *`Public_IPv4_DNS` might change upon restarting the instance.*
 
@@ -56,7 +58,7 @@ You can learn more about SPAs from this [Wikipedia article](https://en.wikipedia
 
 ## Step 2: Email your redirect URI/URIs
 
-After a user successfully logs in with Grafword, they will be redirected to a specified address. The starter app uses /profile as the redirect URI. To ensure proper setup, follow these steps: 
+Redirect URI is the uri the user will be redirected to after successfully logging in with Grafword. The starter app uses /profile as the redirect URI. To ensure proper setup, follow these steps: 
 
 1. **Prepare Your Redirect URI:**
     - Replace Public_IPv4_DNS with your actual EC2 public DNS in the following URI:
@@ -99,6 +101,8 @@ After a user successfully logs in with Grafword, they will be redirected to a sp
     ```bash
     ssh -i ~/.ssh/grafword_spa.pem ubuntu@ec2-01-23-456-789.compute-1.amazonaws.com
     ```
+    - You will be asked `Are you sure you want to continue connecting (yes/no/[fingerprint])?`, type `yes` and Enter.
+
 - If the connection is successful, your terminal prompt should change to something like this: `ubuntu@ip-172-31-XX-XX:~$`
 
 
