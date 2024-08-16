@@ -1,51 +1,115 @@
 # Hosting Grafword Starter SPA on AWS EC2 (Free Tier)
 
-This tutorial will guide you through the steps to host the Grafword Starter SPA on an AWS EC2 instance using the AWS Free Tier.
+##  What is Grafword?
+
+Grafword is an advanced Single Sign-On (SSO) solution that utilizes AI-powered, graphics-based strong authentication. It ensures the use of 128-character cryptic passwords, providing superior protection against brute-force attacks. Grafword replaces traditional password fields with graphical authentication, offering both security and convenience for users and app operators. The system continuously monitors login sessions to adapt authentication challenges, maintaining robust security without compromising user experience.
+
+To learn more, visit [Grafword](https://grafword.com).
+
+### What is a Single Page Application (SPA)?
+
+A Single Page Application (SPA) is a type of web application that loads a single HTML page and dynamically updates the content as the user interacts with the app. This approach enhances the user experience by providing faster navigation and a more seamless interface, as only the necessary parts of the page are updated, reducing server load and improving performance.
+
+You can learn more about SPAs from this [Wikipedia article](https://en.wikipedia.org/wiki/Single-page_application).
+
+### This tutorial will guide you through the steps to host the Grafword Starter SPA on an AWS EC2 instance using the AWS Free Tier.
 
 ## Prerequisites
 
-- AWS account (Free Tier eligible)
+- [AWS](https://aws.amazon.com/) account (Free Tier eligible)
 - Basic knowledge of AWS EC2
 
 ## Step 1: Launch an EC2 Instance
 
 1. **Log in to your AWS Management Console.**
+   - This [YouTube tutorial](https://www.youtube.com/watch?v=0Gz-PUnEUF0) provide a more detailed walkthrough to create an EC2 instance.
 2. **Navigate to the EC2 Dashboard:**
    - Click on "Launch Instance."
-3. **Configure your instance:**
-   - Choose an Amazon Machine Image (AMI), e.g., Ubuntu Server 20.04 LTS.
-   - Select an instance type, e.g., t2.micro (eligible for the free tier).
-   - Configure instance details and add storage as needed.
-4. **Add a key pair:**
-   - Create a new key pair or use an existing one. Download the `.pem` file.
-5. **Configure security group:**
-   - Add a rule to allow HTTP traffic (port 80).
-   - Add a rule to allow SSH traffic (port 22).
-6. **Launch the instance.**
+     - **Follow these steps to configure and launch your EC2 instance:**
 
-You can refer to this [YouTube tutorial](https://www.youtube.com/watch?v=0Gz-PUnEUF0) for a detailed walkthrough.
+       a. **Configure your instance:**
+          - Choose an AMI: Select a machine with a Ubuntu OS, such as Ubuntu Server 20.04 LTS.
+          - Select an Instance Type: Choose `t2.micro` (eligible for the AWS Free Tier).
+         
+          - **Add/Create a Key Pair:**
+            - Create a new key pair. You can name it `grafword_spa.pem` [How to create a key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html#having-ec2-create-your-key-pair).
+            - Download the `.pem` file. After clicking `Create Key Pair`," the `.pem` file will be automatically downloaded to your default download folder. You can move it to your .ssh folder:
 
-## Step 2: Connect to Your EC2 Instance
+              ```bash
+              mv ~/Downloads/grafword_spa.pem ~/.ssh/grafword_spa.pem
+               ```
 
-1. **Open a terminal on your local machine.**
-2. **Change the permissions of your `.pem` file:**
+          - **Configure Security Group:** [This youtube video can guide you](https://youtu.be/0Gz-PUnEUF0?si=10JUG08OwzTUitjW&t=292).
+            - Add rules to allow HTTP traffic (port 80) and SSH traffic (port 22).
+          - **Leave the rest as it is.**
+
+       b. **Launch the Instance:**
+          - Click on `Launch instance`.
+
+       c. **View Instance Details:**
+          - Click `View all instances`.
+          - Wait until the **Instance State** shows `running` and the **Status Checks** indicate `2/2 checks passed`.
+          - Select the instance to view your `Public_IPv4_DNS`. Which will be used to connect to your ec2. 
+          - *`Public_IPv4_DNS` might change upon restarting the instance.*
+
+
+
+## Step 2: Email your redirect URI/URIs
+
+After a user successfully logs in with Grafword, they will be redirected to a specified address. The starter app uses /profile as the redirect URI. To ensure proper setup, follow these steps: 
+
+1. **Prepare Your Redirect URI:**
+    - Replace Public_IPv4_DNS with your actual EC2 public DNS in the following URI:
+        ```bash
+        http://Public_IPv4_DNS/profile
+        ```
+
+        For example, if your EC2 public DNS is ec2-01-23-456-789.compute-1.amazonaws.com, your redirect URI will be:
+
+        ```bash
+        http://ec2-01-23-456-789.compute-1.amazonaws.com/profile
+        ```
+
+
+2. **Send Your Redirect URI to the Admin:**
+    - Email the redirect URI to the admin at info@throughputer.com.
+    - In your email, specify that this is the redirect URI for your application.
+
+3. **Await Response:**
+    - You will receive `clientId` and `grafwordDomain` in response, which are necessary for completing the setup of your application.
+
+    - You can send additional redirect URIs to info@throughputer.com if you add more pages, such as `http://Public_IPv4_DNS/settings` or `http://Public_IPv4_DNS/dashboard`. You can also let us know when your `Public_IPv4_DNS` changes.
+
+   
+## Step 3: Connect to your EC2 Instance
+
+1. **On your local terminal, change the permissions of the `.pem` file you downloaded at `step 1` when creating your instance:**
 
     ```bash
-    chmod 400 /path/to/your-key-pair.pem
+    chmod 400 ~/.ssh/grafword_spa.pem
     ```
 
-3. **Connect to your instance using SSH:**
+2. **Connect to your instance using SSH:**
 
     ```bash
-    ssh -i /path/to/your-key-pair.pem ubuntu@your-ec2-public-dns
+    ssh -i ~/.ssh/grafword_spa.pem ubuntu@Public_IPv4_DNS
     ```
 
-## Step 3: Install and Configure Nginx
+    Replace `Public_IPv4_DNS` with your actual EC2 public DNS. For example:
+    ```bash
+    ssh -i ~/.ssh/grafword_spa.pem ubuntu@ec2-01-23-456-789.compute-1.amazonaws.com
+    ```
+- If the connection is successful, your terminal prompt should change to something like this: `ubuntu@ip-172-31-XX-XX:~$`
+
+
+## Step 4: Install and Configure Nginx
+
+**Still on your AWS instance via SSH:** 
 
 1. **Update your package list:**
 
-    ```bash
-    sudo apt update
+   ```bash
+   sudo apt update
     ```
 
 2. **Install Nginx:**
@@ -61,125 +125,80 @@ You can refer to this [YouTube tutorial](https://www.youtube.com/watch?v=0Gz-PUn
     sudo systemctl enable nginx
     ```
 
-4. **Verify Nginx is running:**
-   - Open a web browser and navigate to `http://your-ec2-public-dns`. You should see the "Welcome to Nginx!" page, confirming that Nginx is running properly.
+4. **In your local web browser, verify Nginx is running:**
+   - Navigate to `http://Public_IPv4_DNS`. You should see the "Welcome to Nginx!" page.
 
-## Step 4: Clone the Repository
+## Step 5: Clone the Repository
 
-1. **Clone the repository:**
-
+1. **On your AWS instance (via SSH), clone the repository by running:**
+ 
     ```bash
     git clone https://github.com/throughputer/grafword-starter-spa-aws.git
+    cd grafword-starter-spa
     ```
 
-## Step 5: Obtain Grafword Credentials
-
-1. **Contact Throughputer admin:**  
-   Email your redirect URI/URIs, e.g., `http://your-ec2-public-dns/profile`, to the admin at `info@throughputer.com`. You will receive `clientId` and `grafwordDomain` in response.
-
-## Step 6: Update Application Configuration
-
-1. **On your local machine, update your `script.js` file with the received credentials:**  
-   Modify the `script.js` file inside `grafword-starter-spa-aws/public` to include the `clientId` and `grafwordDomain`:
-
-    ```javascript
-    const clientId = 'CLIENT_ID';
-    const grafwordDomain = 'GRAFWORD_DOMAIN';
-    ```
-2. **Ensure your `script.js` and other necessary files are ready.**
-
-## Step 7: Upload Your Application Files
-
-1. **Use SCP to upload your files to the EC2 instance:**
+2. **Create a `.env` file:**  
+    In the root of your cloned project directory on your AWS instance. If not already in, cd into it with `cd grafword-starter-spa` Then create a .env file and add the required content in a single step using the following command:
 
     ```bash
-    scp -r -i /path/to/your-key-pair.pem /path/to/grafword-starter-spa-aws ubuntu@your-ec2-public-dns:/home/ubuntu/
+    echo -e "CLIENT_ID=client_id_here\nGRAFWORD_DOMAIN=grafword_domain_here" > .env
     ```
-
-    Example:
+    Replace `client_id_here` and `grafword_domain_here` with the actual values you received from Throughputer. For example:
 
     ```bash
-    scp -r -i ~/Downloads/mykeypair.pem ~/Desktop/grafword-starter-spa-aws ubuntu@your-ec2-public-dns:/home/ubuntu/
+    echo -e "CLIENT_ID=abc123\nGRAFWORD_DOMAIN=example.com" > .env
     ```
 
-## Step 8: Configure and Run Your Node.js Application
+## Step 6: Configure and Run your Application on your AWS Instance
 
-1. **SSH into your EC2 instance (if not already connected):**
+**While still in your root directory `grafword-starter-spa`**
 
-    ```bash
-    ssh -i /path/to/your-key-pair.pem ubuntu@your-ec2-public-dns
-    ```
-
-2. **Navigate to your application directory:**
-
-    ```bash
-    cd /home/ubuntu/grafword-starter-spa-aws
-    ```
-
-3. **Install Node.js and Forever:**
+1. **Install Node.js and Forever:**
 
     ```bash
     sudo apt install nodejs npm -y
-    sudo npm install -g forever
-    ```
-
-4. **Install application dependencies:**
-
-    ```bash
     npm install
     ```
-
-5. **Start your Node.js application using Forever:**
-
-    ```bash
-    forever start server.js
-    ```
-
-## Step 9: Configure Nginx as a Reverse Proxy
-
-1. **Open the Nginx configuration file:**
+2. **Start your Node.js application using Forever:**
 
     ```bash
-    sudo nano /etc/nginx/sites-available/default
+    npm start
     ```
 
-2. **Replace the contents with the following configuration:**
+    - You can also use `npm run stop` to stop the process. Or `npm run restart` to restart.
 
-    ```nginx
-    server {
-        listen 80;
-        server_name your-ec2-public-dns;
+## Step 7: Configure Nginx as a Reverse Proxy
 
-        location / {
-            proxy_pass http://localhost:8000;
-            proxy_http_version 1.1;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection 'upgrade';
-            proxy_set_header Host $host;
-            proxy_cache_bypass $http_upgrade;
-        }
-    }
+1. **Update the Nginx Configuration Using the Template:**
+- Your project includes a file named `nginx.conf.template`, which contains the basic Nginx configuration. This template uses a placeholder {{server_name}} where your EC2 public DNS should be. 
+
+- Replace the `{{server_name}}` placeholder in the template with your actual EC2 public DNS, and then write the updated configuration to the appropriate Nginx configuration file with the following command:
+
+    ```bash
+    sed 's/{{server_name}}/Public_IPv4_DNS/g' nginx.conf.template > /etc/nginx/sites-available/default
+    ```
+    For example, if your EC2 public DNS is e`c2-01-23-456-789.compute-1.amazonaws.com`, you would use the following command:
+    ```bash
+    sed 's/{{server_name}}/ec2-01-23-456-789.compute-1.amazonaws.com/g' nginx.conf.template > /etc/nginx/sites-available/default
     ```
 
-    Replace `your-ec2-public-dns` with your actual EC2 public DNS.
-
-3. **Test the Nginx configuration:**
+2. **Test the Nginx configuration:**
 
     ```bash
     sudo nginx -t
     ```
 
-4. **Restart Nginx to apply the changes:**
+3. **Restart Nginx to apply the changes:**
 
     ```bash
     sudo systemctl restart nginx
     ```
 
-## Step 10: Access Your Application
+## Step 9: Access Your Application
 
-1. **Open a web browser and navigate to:**  
-   `http://your-ec2-public-dns`
+1. **Open your local web browser and navigate to:**  
+   `http://Public_IPv4_DNS` to access your Grafword Starter SPA 
 
 ## Conclusion
 
-Your Grafword Starter SPA should now be up and running on your AWS EC2 instance. You can access it by navigating to `http://your-ec2-public-dns` in your web browser.
+The benefits of Grafword SSO include the unique combination of security without inconveniencing the users, and while providing high app developer productivity, by providing out-of-the-box secure, password-less user account management system and a starter online app, such that the Grafword SSO based new web app developer needs to only add the user-space functionality for their next 'killer' app.
