@@ -1,12 +1,12 @@
 {
-  "name": "grafword-starter-app",
+  "name": "grafword-starter-web-app",
   "version": "1.0.0",
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "forever start --uid 'grafword-starter-spa-aws' server.js",
-    "stop": "forever stop 'grafword-starter-spa-aws'",
-    "restart": "forever restart 'grafword-starter-spa-aws'"
+    "start": "forever start --uid 'grafword-starter-web-app-aws' server.js",
+    "stop": "forever stop 'grafword-starter-web-app-aws'",
+    "restart": "forever restart 'grafword-starter-web-app-aws'"
   },
   "dependencies": {
     "@types/express": "^4.17.21",

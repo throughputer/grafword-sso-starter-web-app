@@ -1,18 +1,14 @@
-# Hosting Grafword Starter SPA on AWS EC2 (Free Tier)
+# Hosting Grafword Starter Web App on AWS EC2 (Free Tier)
+
+### This tutorial will guide you through the steps to host the Grafword Starter Web App on an AWS EC2 instance using the AWS Free Tier.
 
 ##  What is Grafword?
 
-Grafword is an advanced Single Sign-On (SSO) solution that utilizes AI-powered, graphics-based strong authentication. It ensures the use of 128-character cryptic passwords, providing superior protection against brute-force attacks. Grafword replaces traditional password fields with graphical authentication, offering both security and convenience for users and app operators. The system continuously monitors login sessions to adapt authentication challenges, maintaining robust security without compromising user experience.
+Grafword is an advanced Single Sign-On (SSO) solution designed for modern web applications, including Single Page Applications (SPAs). It utilizes AI-powered, graphics-based strong authentication to enhance security. Grafword ensures the use of 128-character cryptic passwords, providing superior protection against brute-force attacks. It replaces traditional password fields with graphical authentication, offering both security and convenience for users and app operators. The system continuously monitors login sessions to adapt authentication challenges, maintaining robust security without compromising the user experience in SPAs.
 
-To learn more, visit [Grafword](https://grafword.com). [Grafword SSO](https://login.grafword.com)
+To learn more, visit [Grafword](https://grafword.com). 
 
-### What is a Single Page Application (SPA)?
-
-A Single Page Application (SPA) is a type of web application that loads a single HTML page and dynamically updates the content as the user interacts with the app. This approach enhances the user experience by providing faster navigation and a more seamless interface, as only the necessary parts of the page are updated, reducing server load and improving performance.
-
-You can learn more about SPAs from this [Wikipedia article](https://en.wikipedia.org/wiki/Single-page_application).
-
-### This tutorial will guide you through the steps to host the Grafword Starter SPA on an AWS EC2 instance using the AWS Free Tier.
+To see Grafword in action, visit [Grafword SSO](https://login.grafword.com)
 
 ## Prerequisites
 
@@ -23,42 +19,45 @@ You can learn more about SPAs from this [Wikipedia article](https://en.wikipedia
 
 1. **Log in to your AWS Management Console.**
    - This [YouTube tutorial](https://www.youtube.com/watch?v=0Gz-PUnEUF0) provide a more detailed walkthrough to create an EC2 instance.
-2. **Navigate to the EC2 Dashboard:**
-   - Click on "Launch Instance."
+2. **Navigate to the EC2 Dashboard**
+3. **Click on "Launch Instance."**
      - **Follow these steps to configure and launch your EC2 instance:**
 
-       a. **Configure your instance:**
-          - Name your instance
-          - Choose an AMI: Select a machine with a Ubuntu OS, such as Ubuntu Server 20.04 LTS.
-          - Select an Instance Type: Choose `t2.micro` (eligible for the AWS Free Tier).
+4. **Configure your instance:**
+    - Name your instance.
+    - Choose an AMI: Select a machine with a Ubuntu OS, such as Ubuntu Server 20.04 LTS.
+    - Select an Instance Type: Choose `t2.micro` (eligible for the AWS Free Tier).
          
-          - **Add/Create a Key Pair:**
-            - Create a new key pair. You can name it `grafword_spa` [How to create a key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html#having-ec2-create-your-key-pair).
-            - Download the `.pem` file. After clicking `Create Key Pair`," the `.pem` file will be automatically downloaded to your default download folder. You can move it to your .ssh folder:
+    - **Add/Create a Key Pair:**
+        - During the instance creation process, you will see an option to "Create a new key pair" or "Select an existing key pair"
 
-              ```bash
-              mv ~/Downloads/grafword_spa.pem ~/.ssh/grafword_spa.pem
-               ```
+        - Click on "Create a new key pair".
+        - Enter a name for your key pair, e.g., `grafword_spa` and click on "Create key pair".
+        - The `.pem` file will be automatically downloaded to your default download folder. Move it to your .ssh folder:
 
-          - **Configure Security Group:** [This youtube video can guide you](https://youtu.be/0Gz-PUnEUF0?si=10JUG08OwzTUitjW&t=292).
-            - Add rules to allow HTTP traffic (port 80) and SSH traffic (port 22).
-          - **Leave the rest as it is.**
+        ```bash
+        mv ~/Downloads/grafword_spa.pem ~/.ssh/grafword_spa.pem
+        ```
 
-       b. **Launch the Instance:**
+    - **Configure Security Group:** 
+         - Add rules to allow HTTP traffic (port 80) and SSH traffic (port 22).
+         - For a visual guide on configuring security groups [This short clip can be helpful](https://youtu.be/0Gz-PUnEUF0?si=10JUG08OwzTUitjW&t=292).
+    - **Leave the rest as it is.**
+
+5. **Launch the Instance:**
           - Click on `Launch instance`.
-          - If you see `Success`, that means you successfully greated an instance!
+          - If you see `Success`, that means you successfully created an instance!
 
-       c. **View Instance Details:**
+6. **View Instance Details:**
           - Scroll down and click `View all instances`. Refresh the page if you don't see your new instance.
           - Wait until the **Instance State** shows `running` and the **Status Checks** indicate `2/2 checks passed`. Refresh page as needed.
           - Select the instance to view your `Public_IPv4_DNS`. Which will be used to connect to your ec2. 
           - *`Public_IPv4_DNS` might change upon restarting the instance.*
 
 
-
 ## Step 2: Email your redirect URI/URIs
 
-Redirect URI is the uri the user will be redirected to after successfully logging in with Grafword. The starter app uses /profile as the redirect URI. To ensure proper setup, follow these steps: 
+Redirect URI is the uri the user will be redirected to after successfully logging in with Grafword with your app. The starter app uses /profile as the redirect URI. To ensure proper setup, follow these steps: 
 
 1. **Prepare Your Redirect URI:**
     - Replace Public_IPv4_DNS with your actual EC2 public DNS in the following URI:
@@ -138,13 +137,11 @@ Redirect URI is the uri the user will be redirected to after successfully loggin
  
     ```bash
     git clone https://github.com/throughputer/grafword-starter-spa-aws.git
-    cd grafword-starter-spa-aws
     ```
 
-2. **Create a `.env` file:**
-    `cd grafword-starter-spa`, then modify and execute the following:
-
+2. **Create a `.env` file with the following:**
     ```bash
+    cd grafword-starter-spa
     echo -e "CLIENT_ID=client_id_here\nGRAFWORD_DOMAIN=grafword_domain_here" > .env
     ```
     Replace `client_id_here` and `grafword_domain_here` with the actual values you received from Throughputer. For example:
