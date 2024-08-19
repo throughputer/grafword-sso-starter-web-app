@@ -1,10 +1,10 @@
-# Hosting Grafword Starter Web App on AWS EC2 (Free Tier)
+# Hosting Grafword-SSO Starter Web App on AWS EC2 (Free Tier)
 
-### This tutorial will guide you through the steps to host the Grafword Starter Web App on an AWS EC2 instance using the AWS Free Tier.
+### This tutorial will guide you through the steps to host the Grafword-SSO Starter Web App on an AWS EC2 instance using the AWS Free Tier.
 
-##  What is Grafword?
+##  What is Grafword-SSO?
 
-Grafword is an advanced Single Sign-On (SSO) solution designed for modern web applications, including Single Page Applications (SPAs). It utilizes AI-powered, graphics-based strong authentication to enhance security. Grafword ensures the use of 128-character cryptic passwords, providing superior protection against brute-force attacks. It replaces traditional password fields with graphical authentication, offering both security and convenience for users and app operators. The system continuously monitors login sessions to adapt authentication challenges, maintaining robust security without compromising the user experience in SPAs.
+Grafword-SSO is an advanced Single Sign-On (SSO) solution designed for modern web applications, including Single Page Applications (SPAs). It utilizes AI-powered, graphics-based strong authentication to enhance security. Grafword ensures the use of 128-character cryptic passwords, providing superior protection against brute-force attacks. It replaces traditional password fields with graphical authentication, offering both security and convenience for users and app operators. The system continuously monitors login sessions to adapt authentication challenges, maintaining robust security without compromising the user experience in SPAs.
 
 To learn more, visit [Grafword](https://grafword.com). 
 
@@ -29,11 +29,11 @@ To see Grafword in action, visit [Grafword SSO](https://login.grafword.com)
         - During the instance creation process, you will see an option to "Create a new key pair" or "Select an existing key pair"
 
         - Click on "Create a new key pair".
-        - Enter a name for your key pair, e.g., `grafword_spa` and click on "Create key pair".
+        - Enter a name for your key pair, e.g., `grafword_sso` and click on "Create key pair".
         - The `.pem` file will be automatically downloaded to your default download folder. Move it to your .ssh folder:
 
         ```bash
-        mv ~/Downloads/grafword_spa.pem ~/.ssh/grafword_spa.pem
+        mv ~/Downloads/grafword_sso.pem ~/.ssh/grafword_sso.pem
         ```
 
     - **Configure Security Group:** 
@@ -84,18 +84,18 @@ Redirect URI is the uri the user will be redirected to after successfully loggin
 1. **On your local terminal, change the permissions of the `.pem` file you downloaded at `step 1` when creating your instance:**
 
     ```bash
-    chmod 400 ~/.ssh/grafword_spa.pem
+    chmod 400 ~/.ssh/grafword_sso.pem
     ```
 
 2. **Connect to your instance using SSH:**
 
     ```bash
-    ssh -i ~/.ssh/grafword_spa.pem ubuntu@Public_IPv4_DNS
+    ssh -i ~/.ssh/grafword_sso.pem ubuntu@Public_IPv4_DNS
     ```
 
     Replace `Public_IPv4_DNS` with your actual EC2 public DNS. For example:
     ```bash
-    ssh -i ~/.ssh/grafword_spa.pem ubuntu@ec2-01-23-456-789.compute-1.amazonaws.com
+    ssh -i ~/.ssh/grafword_sso.pem ubuntu@ec2-01-23-456-789.compute-1.amazonaws.com
     ```
     - You will be asked `Are you sure you want to continue connecting (yes/no/[fingerprint])?`, type `yes` and Enter.
 
@@ -133,12 +133,12 @@ Redirect URI is the uri the user will be redirected to after successfully loggin
 1. **On your AWS instance (via SSH), clone the repository by running:**
  
     ```bash
-    git clone https://github.com/throughputer/grafword-starter-spa-aws.git
+    git clone https://github.com/throughputer/grafword-sso-starter-web-app.git
     ```
 
 2. **Create a `.env` file with the following:**
     ```bash
-    cd grafword-starter-spa
+    cd grafword-sso-starter-web-app
     echo -e "CLIENT_ID=client_id_here\nGRAFWORD_DOMAIN=grafword_domain_here" > .env
     ```
     Replace `client_id_here` and `grafword_domain_here` with the actual values you received from Throughputer. For example:
@@ -149,7 +149,7 @@ Redirect URI is the uri the user will be redirected to after successfully loggin
 
 ## Step 6: Configure and Run your Application on your AWS Instance
 
-**While still in your root directory `grafword-starter-spa-aws`**
+**While still in your root directory `grafword-sso-starter-web-app`**
 
 1. **Install Node.js and Forever:**
 
