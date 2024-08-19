@@ -65,7 +65,7 @@ Redirect URI is the URI the user will be redirected to after successfully loggin
         For example, if your EC2 public DNS is ec2-123-45-67-89.compute-1.amazonaws.com, your redirect URI will be:
 
         ```bash
-        http://ec2-01-23-456-789.compute-1.amazonaws.com/profile
+        http://ec2-123-45-67-89.compute-1.amazonaws.com/profile
         ```
 
 
@@ -95,11 +95,11 @@ Redirect URI is the URI the user will be redirected to after successfully loggin
 
     Replace `Public_IPv4_DNS` with your actual EC2 public DNS. For example:
     ```bash
-    ssh -i ~/.ssh/grafword_sso.pem ubuntu@ec2-01-23-456-789.compute-1.amazonaws.com
+    ssh -i ~/.ssh/grafword_sso.pem ubuntu@ec2-123-45-67-89.compute-1.amazonaws.com
     ```
     - You will be asked `Are you sure you want to continue connecting (yes/no/[fingerprint])?`, type `yes` and Enter.
 
-- If the connection is successful, your terminal prompt should change to something like this: `ubuntu@ip-172-31-XX-XX:~$`
+- If the connection is successful, your terminal prompt should change to something like this: `ubuntu@ip-XXX-XXX-XXX-XXX:~$`
 
 
 ## Step 4: Install and Configure Nginx
@@ -180,7 +180,7 @@ Redirect URI is the URI the user will be redirected to after successfully loggin
 
     For example, if your EC2 public DNS is e`c2-01-23-456-789.compute-1.amazonaws.com`, you would use the following command:
     ```bash
-    sed 's/{{server_name}}/ec2-01-23-456-789.compute-1.amazonaws.com/g' nginx.conf.template | sudo tee /etc/nginx/sites-available/default > /dev/null
+    sed 's/{{server_name}}/ec2-123-45-67-89.compute-1.amazonaws.com/g' nginx.conf.template | sudo tee /etc/nginx/sites-available/default > /dev/null
     ```
 
 2. **Test the Nginx configuration:**
@@ -202,7 +202,7 @@ Redirect URI is the URI the user will be redirected to after successfully loggin
 1. **Open your local web browser and navigate to:**  
    `http://Public_IPv4_DNS` to access your Grafword Starter SPA.
 
-   Example: `http://http://ec2-01-23-456-789.compute-1.amazonaws.com`
+   Example: `http://http://ec2-123-45-67-89.compute-1.amazonaws.com`
 
 ## Conclusion
 
