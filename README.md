@@ -18,11 +18,8 @@ To see Grafword in action, visit [Grafword SSO](https://login.grafword.com)
 ## Step 1: Launch an EC2 Instance
 
 1. **Log in to your AWS Management Console.**
-   - This [YouTube tutorial](https://www.youtube.com/watch?v=0Gz-PUnEUF0) provide a more detailed walkthrough to create an EC2 instance.
 2. **Navigate to the EC2 Dashboard**
 3. **Click on "Launch Instance."**
-     - **Follow these steps to configure and launch your EC2 instance:**
-
 4. **Configure your instance:**
     - Name your instance.
     - Choose an AMI: Select a machine with a Ubuntu OS, such as Ubuntu Server 20.04 LTS.
@@ -45,15 +42,15 @@ To see Grafword in action, visit [Grafword SSO](https://login.grafword.com)
     - **Leave the rest as it is.**
 
 5. **Launch the Instance:**
-          - Click on `Launch instance`.
-          - If you see `Success`, that means you successfully created an instance!
+    - Click on `Launch instance`.
+    - If you see `Success`, that means you successfully created an instance!
 
 6. **View Instance Details:**
-          - Scroll down and click `View all instances`. Refresh the page if you don't see your new instance.
-          - Wait until the **Instance State** shows `running` and the **Status Checks** indicate `2/2 checks passed`. Refresh page as needed.
-          - Select the instance to view your `Public_IPv4_DNS`. Which will be used to connect to your ec2. 
-          - *`Public_IPv4_DNS` might change upon restarting the instance.*
-
+    - Scroll down and click `View all instances`. Refresh the page if you don't see your new instance.
+    - Wait until the **Instance State** shows `running` and the **Status Checks** indicate `2/2 checks passed`. Refresh page as needed.
+    - Select the instance to view your `Public_IPv4_DNS`. Which will be used to connect to your ec2. 
+    - *`Public_IPv4_DNS` might change upon restarting the instance.*
+ - This [YouTube tutorial](https://www.youtube.com/watch?v=0Gz-PUnEUF0) provide a more detailed walkthrough to create an EC2 instance.
 
 ## Step 2: Email your redirect URI/URIs
 
