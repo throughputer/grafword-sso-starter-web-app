@@ -26,7 +26,7 @@ To see Grafword in action, visit [Grafword SSO](https://login.grafword.com)
     - Select an Instance Type: Choose `t2.micro` (eligible for the AWS Free Tier).
          
     - **Add/Create a Key Pair:**
-        - During the instance creation process, you will see an option to "Create a new key pair" or "Select an existing key pair"
+        - You will see an option to "Create a new key pair" or "Select an existing key pair"
 
         - Click on "Create a new key pair".
         - Enter a name for your key pair, e.g., `grafword_sso` and click on "Create key pair".
@@ -54,7 +54,7 @@ To see Grafword in action, visit [Grafword SSO](https://login.grafword.com)
 
 ## Step 2: Email your redirect URI/URIs
 
-Redirect URI is the uri the user will be redirected to after successfully logging in with Grafword with your app. The starter app uses /profile as the redirect URI. To ensure proper setup, follow these steps: 
+Redirect URI is the URI the user will be redirected to after successfully logging in with Grafword with your app. The starter app uses /profile as the redirect URI. To ensure proper setup, follow these steps: 
 
 1. **Prepare Your Redirect URI:**
     - Replace Public_IPv4_DNS with your actual EC2 public DNS in the following URI:
@@ -62,7 +62,7 @@ Redirect URI is the uri the user will be redirected to after successfully loggin
         http://Public_IPv4_DNS/profile
         ```
 
-        For example, if your EC2 public DNS is ec2-01-23-456-789.compute-1.amazonaws.com, your redirect URI will be:
+        For example, if your EC2 public DNS is ec2-123-45-67-89.compute-1.amazonaws.com, your redirect URI will be:
 
         ```bash
         http://ec2-01-23-456-789.compute-1.amazonaws.com/profile
